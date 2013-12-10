@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="ticTacTorrent">
+<head>
+    <meta charset="utf-8" />
+    <title>Tic_Tac_Torrent</title>
+
+    <link href="http://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet" type="text/css">
+
+    <!-- Tic_Tac_Torrent references -->
+    <link href="css/default.css" rel="stylesheet" />
+    <link href="css/loading-bar.css" rel="stylesheet" />
+
+    <script src="js/hammer.min.js"></script>
+    <script src="js/Raedix.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-hammer.js"></script>
+    <script src="js/Rules.js"></script>
+    <script src="js/loading-bar.js"></script>
+    <script src="js/ArtificialIntelligence.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/blowfish.js"></script>
+
+
+</head>
+<body data-ng-controller="gameCtrl">
+    <section id="options-menu" data-ng-class="{shown : data.showMenu}">
+        <h1 id="title">Tic Tac Torrent.</h1>
+        <h1>Board Size</h1>
+        
+        <span id="content">
+            <span class="arrow-box left" hammer-tap="resizeGrid(0)">
+                <span class="l-arrow"></span>
+            </span>
+            <center>
+            <span id="grid-space">
+                <div class="row" data-ng-repeat="items in data.grid">
+                    <div class="box {{'s'+data.size}}" data-ng-repeat="items in data.grid"></div>
+                </div>
+            </span>
+            </center>
+            <span class="arrow-box right" hammer-tap="resizeGrid(1)">
+                <span class="r-arrow"></span>
+            </span>
+        </span>
+
+        <div id="begin-button" hammer-tap="changeViews(false)"><h3>Begin.</h3></div>
+    </section>
+    
+    <section id="gameboard" data-ng-class="{shown : data.showBoard}">
+        <center>
+        <div id="grid-space">
+            <span id="pl1" data-ng-class="{shown : plTurn(0)}">Player 1</span>
+            <span id="pl2" data-ng-class="{shown : plTurn(1)}">Player 2</span>
+            <div 
+            class="row"
+            data-ng-repeat="items in data.grid">
+                <div
+                class="box s{{data.size}}"
+                data-ng-class="{shown : data.showBoard}"
+                hammer-tap="playerMove($index, $parent.$index)"
+                data-ng-repeat="items in data.grid">
+                    <span
+                    class="x s{{data.size}}"
+                    data-ng-class="{shown : selected(0, $index, $parent.$index)}">
+                        <svg
+                        x="0px" y="0px"
+                        viewBox="0 0 40 40"
+                        enable-background="new 0 0 40 40">
+                        <line
+                        stroke-width="7"
+                        stroke-miterlimit="10"
+                        x1="0" y1="0" x2="40" y2="40"></line>
+                        <line
+                        stroke-width="7"
+                        stroke-miterlimit="10"
+                        x1="40" y1="0" x2="0" y2="40"></line>
+                        </svg>
+                    </span>
+                    <span
+                    class="o s{{data.size}}"
+                    data-ng-class="{shown : selected(1, $index, $parent.$index)}">
+                        <svg
+                        x="0px" y="0px"
+                        viewBox="0 0 40 40" enable-background="new 0 0 40 40">
+                        <circle
+                        stroke-width="7" stroke-miterlimit="10"
+                        cx="20" cy="20" r="20">
+                        </circle>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div 
+            id="win-state" 
+            data-ng-class="{shown : data.gameWin}">
+                Player {{data.winPlayer+1}} wins!
+            </div>
+            <div
+            id="draw-state"
+            data-ng-class="{shown : data.gameDraw}">
+                The result is a draw!
+            </div>
+        </div>
+        <div 
+        id="new-game"
+        data-ng-class="{shown : data.gameWin || data.gameDraw}"
+        hammer-tap="changeViews(true)">
+            New Game
+        </div>
+        </center>
+    </section>
+</body>
+</html>
