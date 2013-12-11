@@ -2,7 +2,7 @@
 (function() {
 	"use-strict";
 
-	var TicTacTorrent = angular.module('ticTacTorrent', ['hammer', 'angular-loading-bar']);
+	var TicTacTorrent = angular.module('ticTacTorrent', ['hammer', 'angular-loading-bar', 'ngAnimate']);
 
 	TicTacTorrent.service('Raedix', ['$http', myRaedix]);
 
